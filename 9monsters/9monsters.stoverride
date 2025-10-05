@@ -1,0 +1,17 @@
+name: 9monsters
+desc: |-
+    - 开屏广告
+    - 首页下方卡片
+category: ad
+icon: https://raw.githubusercontent.com/Hurpods/stash-rule/main/9monsters/9monsters.jpg
+http:
+    mitm:
+        - api.ninemonsters.com
+    body-rewrite:
+        - https://api.ninemonsters.com/initial/get response-jq .data.startup_ad=[]
+        - https://api.ninemonsters.com/initial/get response-jq .data.banner_ad=[]
+        - https://api.ninemonsters.com/initial/get response-jq .data.location_ad=[]
+        - https://api.ninemonsters.com/initial/get response-jq .data.initial_ad={}
+        - https://api.ninemonsters.com/initial/get response-jq .data.ad=0
+        - https://api.ninemonsters.com/initial/get response-jq .data.premium_limit=4070908800000
+        - https://api.ninemonsters.com/initial/get response-jq .data.payment_limit=4070908800000

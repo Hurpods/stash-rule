@@ -7,7 +7,7 @@ author: |-
 category: |-
   CronScript
 icon: |-
-  https://raw.githubusercontent.com/Hurpods/stash-rule/master/smzdm/smzdm.png
+  https://raw.githubusercontent.com/Hurpods/stash-rule/main/smzdm/smzdm.png
 openUrl: |-
   https://github.com/Hurpods/stash-rule
 homepage: |-
@@ -27,5 +27,5 @@ cron:
       timeout: 300
 script-providers:
   "什么值得买_获取Cookie_7":
-    url: https://raw.githubusercontent.com/Hurpods/stash-rule/master/smzdm/smzdm.js
+    url: https://raw.githubusercontent.com/Hurpods/stash-rule/main/smzdm/smzdm.js
     interval: 86400

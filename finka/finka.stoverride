@@ -1,0 +1,8 @@
+name: finka
+desc: 去除广告
+category: ad
+icon: https://raw.githubusercontent.com/Hurpods/stash-rule/main/finka/finka.png
+http:
+    url-rewrite:
+        - ^https?://api\.finka\.com/ad/* - reject
+        - ^https?://mobads\.baidu\.com/* - reject
