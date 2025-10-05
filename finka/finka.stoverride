@@ -3,6 +3,11 @@ desc: 去除广告
 category: ad
 icon: https://raw.githubusercontent.com/Hurpods/stash-rule/main/finka/finka.png
 http:
+    mitm:
+        - api.finka.cn
+        - mobads.baidu.com
     url-rewrite:
-        - ^https?://api\.finka\.com/ad/* - reject
-        - ^https?://mobads\.baidu\.com/* - reject
+        - ^https?://api\.finka\.cn/ad/.* - reject
+        - ^https?://mobads.*baidu\.com/.* - reject
+    body-rewrite:
+        - https://api.finka.cn/constants/ios response-jq .data.splashAdNew={}
