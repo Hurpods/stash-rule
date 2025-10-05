@@ -1,0 +1,31 @@
+name: 什么值得买
+desc: |-
+  什么值得买每日签到
+author: |-
+  blackmatrix7
+  hurpods
+category: |-
+  CronScript
+icon: |-
+  https://raw.githubusercontent.com/Hurpods/stash-rule/master/smzdm/smzdm.png
+openUrl: |-
+  https://github.com/Hurpods/stash-rule
+homepage: |-
+  https://github.com/Hurpods/stash-rule
+
+http:
+  mitm:
+    - "user-api.smzdm.com"
+  script:
+    - match: ^https?:\/\/user-api\.smzdm\.com\/checkin$
+      name: "什么值得买_获取Cookie_7"
+      type: request
+cron:
+  script:
+    - name: "什么值得买_获取Cookie_7"
+      cron: "2 0 * * *"
+      timeout: 300
+script-providers:
+  "什么值得买_获取Cookie_7":
+    url: https://raw.githubusercontent.com/Hurpods/stash-rule/master/smzdm/smzdm.js
+    interval: 86400
