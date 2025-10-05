@@ -18,14 +18,14 @@ http:
     - "user-api.smzdm.com"
   script:
     - match: ^https?:\/\/user-api\.smzdm\.com\/checkin$
-      name: "什么值得买_获取Cookie_7"
+      name: "什么值得买"
       type: request
 cron:
   script:
-    - name: "什么值得买_获取Cookie_7"
-      cron: "2 0 * * *"
+    - name: "什么值得买"
+      cron: "55 13 * * *"
       timeout: 300
 script-providers:
-  "什么值得买_获取Cookie_7":
+  "什么值得买":
     url: https://raw.githubusercontent.com/Hurpods/stash-rule/main/smzdm/smzdm.js
-    interval: 86400
+    interval: 50

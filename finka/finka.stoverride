@@ -1,5 +1,6 @@
-name: finka
-desc: 去除广告
+name: 翻咔
+desc: |-
+    - 去除开屏广告
 category: ad
 icon: https://raw.githubusercontent.com/Hurpods/stash-rule/main/finka/finka.png
 http:
