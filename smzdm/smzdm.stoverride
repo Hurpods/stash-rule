@@ -23,9 +23,9 @@ http:
 cron:
   script:
     - name: "什么值得买"
-      cron: "55 13 * * *"
+      cron: "02 00 * * *"
       timeout: 300
 script-providers:
   "什么值得买":
     url: https://raw.githubusercontent.com/Hurpods/stash-rule/main/smzdm/smzdm.js
-    interval: 50
+    interval: 60

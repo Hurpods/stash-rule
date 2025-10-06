@@ -74,7 +74,6 @@ async function getWebOrAppCookie() {
 
 function androidSignin(username) {
   return new Promise(async (resolve, reject) => {
-    $.logger.info(username);
     const smzdmToken = currentCookie.slice(5);
     const smzdmKey = 'apr1$AwP!wRRT$gJ/q.X24poeBInlUJC';
     const outcome = Math.round(new Date().getTime() / 1000).toString();
@@ -116,18 +115,8 @@ function getWebUserInfo() {
   let userInfo = {
     smzdm_id: null, // 什么值得买Id
     nick_name: null, // 昵称
-    avatar: null, // 头像链接
     has_checkin: null, // 是否签到
     daily_checkin_num: null, // 连续签到天数
-    unread_msg: null, // 未读消息
-    level: null, // 旧版等级
-    vip: null, // 新版VIP等级
-    exp: null, // 旧版经验
-    point: null, // 积分
-    gold: null, // 金币
-    silver: null, // 碎银子
-    prestige: null, // 威望
-    user_point_list: [], // 近期经验变动情况
     blackroom_desc: "",
     blackroom_level: "",
   };
@@ -137,14 +126,12 @@ function getWebUserInfo() {
       .get({
         url: `https://zhiyou.smzdm.com/user/info/jsonp_get_current?with_avatar_ornament=1&callback=jQuery112403507528653716241_${new Date().getTime()}&_=${new Date().getTime()}`,
         headers: {
-          Accept:
-            "text/javascript, application/javascript, application/ecmascript, application/x-ecmascript, */*; q=0.01",
+          "Accept": "text/javascript, application/javascript, application/ecmascript, application/x-ecmascript, */*; q=0.01",
           "Accept-Language": "zh-CN,zh;q=0.9",
-          Connection: "keep-alive",
-          Host: "zhiyou.smzdm.com",
-          Referer: "https://zhiyou.smzdm.com/user/",
-          "User-Agent":
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+          "Connection": "keep-alive",
+          "Host": "zhiyou.smzdm.com",
+          "Referer": "https://zhiyou.smzdm.com/user/",
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
         },
       })
       .then((resp) => {
@@ -153,14 +140,10 @@ function getWebUserInfo() {
         if (obj["smzdm_id"] !== 0) {
           userInfo.smzdm_id = obj["smzdm_id"];
           userInfo.nick_name = obj["nickname"]; // 昵称
-          userInfo.avatar = `https:${obj["avatar"]}`; // 头像链接
           userInfo.has_checkin = obj["checkin"]["has_checkin"]; // 是否签到
           userInfo.daily_checkin_num = obj["checkin"]["daily_checkin_num"]; // 连续签到天数
-          userInfo.unread_msg = obj["unread"]["notice"]["num"]; // 未读消息数
-          userInfo.level = obj["level"]; // 旧版等级
-          userInfo.vip = obj["vip_level"]; // 新版VIP等级
           userInfo.blackroom_desc = obj["blackroom_desc"]; // 小黑屋描述
-          userInfo.blackroom_desc = obj["blackroom_level"]; // 小黑屋等级
+          userInfo.blackroom_level = obj["blackroom_level"]; // 小黑屋等级
         } else {
           $.notification.post(scriptName, "", `获取用户信息异常，Cookie过期或接口变化：${JSON.stringify(obj)}`);
         }
@@ -168,64 +151,6 @@ function getWebUserInfo() {
       .catch((err) => {
         $$.notification.post(scriptName, "", `获取用户信息异常，${err}`);
       });
-    // 获取新版用户信息
-    await $.http
-      .get({
-        url: "https://zhiyou.smzdm.com/user/exp/",
-        headers: {
-          Cookie: currentCookie
-        }
-      })
-      .then((resp) => {
-        const data = resp.body;
-        // 获取用户名
-        userInfo.nick_name = data
-          .match(
-            /info-stuff-nickname.*zhiyou\.smzdm\.com\/user[^<]*>([^<]*)</
-          )[1]
-          .trim();
-        // 获取近期经验变动情况
-        const pointTimeList = data.match(
-          /<div class="scoreLeft">(.*)<\/div>/gi
-        );
-        const pointDetailList = data.match(
-          /<div class=['"]scoreRight ellipsis['"]>(.*)<\/div>/gi
-        );
-        const minLength =
-          pointTimeList.length > pointDetailList.length
-            ? pointDetailList.length
-            : pointTimeList.length;
-        let userPointList = [];
-        for (let i = 0; i < minLength; i++) {
-          userPointList.push({
-            time: pointTimeList[i].match(
-              /\<div class=['"]scoreLeft['"]\>(.*)\<\/div\>/
-            )[1],
-            detail: pointDetailList[i].match(
-              /\<div class=['"]scoreRight ellipsis['"]\>(.*)\<\/div\>/
-            )[1],
-          });
-        }
-        userInfo.user_point_list = userPointList;
-        // 获取用户资源
-        const assetsNumList = data.match(/assets-part[^<]*>(.*)</gi);
-        userInfo.point = Number(
-          assetsNumList[0].match(/assets-num[^<]*>(.*)</)[1]
-        ); // 积分
-        userInfo.exp = Number(
-          assetsNumList[2].match(/assets-num[^<]*>(.*)</)[1]
-        ); // 经验
-        userInfo.gold = Number(
-          assetsNumList[4].match(/assets-num[^<]*>(.*)</)[1]
-        ); // 金币
-        userInfo.silver = Number(
-          assetsNumList[6].match(/assets-num[^<]*>(.*)</)[1]
-        ); // 碎银子
-      })
-      .catch((err) => {
-        $.notification.post(scriptName, "", `获取新版用户信息出现异常，${err}`);
-      });
-    // 返回结果
     resolve(userInfo);
   });
 }
@@ -266,7 +191,7 @@ async function multiUsersSignIn() {
       // 获取签到后的用户信息
       const afterUserInfo = await getWebUserInfo();
 
-      title = `${scriptName} - ${afterUserInfo.nick_name} V${afterUserInfo.vip}`;
+      title = `${scriptName} - ${afterUserInfo.nick_name}`;
 
       // 检查是否黑号
       if ($.data.read(smzdmCheckBlackRoom, false) === true && (afterUserInfo.blackroom_desc)) {
@@ -274,16 +199,6 @@ async function multiUsersSignIn() {
           title, "",
           `⚠️账户已在小黑屋中，请谨慎使用脚本！\n小黑屋描述:${afterUserInfo.blackroom_desc}`
         );
-      }
-
-      // 重复签到
-      if (
-        afterUserInfo.has_checkin === true &&
-        beforeUserInfo.has_checkin === true
-      ) {
-        subTitle = "重复签到";
-      } else {
-        subTitle = `已连续签到${afterUserInfo.daily_checkin_num}天`;
       }
     }
   }
