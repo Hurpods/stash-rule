@@ -28,4 +28,4 @@ cron:
 script-providers:
   "什么值得买":
     url: https://raw.githubusercontent.com/Hurpods/stash-rule/main/smzdm/smzdm.js
-    interval: 60
+    interval: 86400

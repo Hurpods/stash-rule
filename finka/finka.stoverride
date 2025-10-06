@@ -1,14 +1,59 @@
 name: 翻咔
 desc: |-
-    - 去除开屏广告
+  - 开屏广告
+  - 附近的页面蒙层
+  - 搜索
+      - 地区推荐
+      - 智能筛选
+  - 动态
+      - 顶部活动
+      - 信息流中间会员推荐
+      - 信息流推流
+  - 我的页
+      - 会员广告
+      - 会员功能卡
+      - 三方服务广告
 category: ad
 icon: https://raw.githubusercontent.com/Hurpods/stash-rule/main/finka/finka.png
 http:
-    mitm:
-        - api.finka.cn
-        - mobads.baidu.com
-    url-rewrite:
-        - ^https?://api\.finka\.cn/ad/.* - reject
-        - ^https?://mobads.*baidu\.com/.* - reject
-    body-rewrite:
-        - https://api.finka.cn/constants/ios response-jq .data.splashAdNew={}
+  mitm:
+    - api.finka.cn
+    - mobads.baidu.com
+  url-rewrite:
+    - ^https?://api\.finka\.cn/ad/.* - reject
+    - ^https?://api\.finka\.cn/recommend/other - reject
+    - ^https?://api\.finka\.cn/billing/vip-page - reject
+    - ^https?://api\.finka\.cn/billing/vip/getDiscountDescription - reject
+    - ^https?://api\.finka\.cn/vas/address/search/rcmd-order - reject
+    - ^https?://api\.finka\.cn/user/setting/match-keyword* - reject
+    - ^https?://mobads.*baidu\.com/.* - reject
+    - ^https?://mobads-pre-config\.cdn\.bcebos\.com/.* - reject
+  body-rewrite:
+    - https://api.finka.cn/constants/ios response-jq .data.splashAdNew={}
+    - https://api.finka.cn/constants/ios response-jq .data.adFeedConfig=[]
+    - https://api.finka.cn/feed/notify/aloha response-jq .data.guideContent=""
+    - https://api.finka.cn/feed/notify/aloha response-jq .data.jumpInfo=""
+    - https://api.finka.cn/feed/notify/aloha response-jq .data.buttonContent=""
+    - https://api.finka.cn/profile/info/v2 response-jq .data.featuredServicesList=[]
+    - https://api.finka.cn/profile/info/v2 response-jq .data.ad=[]
+    - https://api.finka.cn/profile/info/v2 response-jq .data.outFunctionList=[]
+    - https://api.finka.cn/profile/info/v2 response-jq .data.adMoreUrl=""
+    - https://api.finka.cn/profile/info/v2 response-jq .data.vasEntranceView={}
+    - https://api.finka.cn/profile/info/v2 response-jq .data.profilePasterAd={}
+    - https://api.finka.cn/profile/info/v2 response-jq .data.innerFunction=[]
+    - https://api.finka.cn/profile/info/v2 response-jq .data.vasEntranceInfo={}
+    - https://api.finka.cn/profile/info/v2 response-jq .data.valueEquityTopList=[]
+    - https://api.finka.cn/inbox/match/newest response-jq .data.superBoostEntrance={}
+    - https://api.finka.cn/vas/tool-box/get response-jq .data.redDot=false
+  script:
+    - match: ^https?://api\.finka\.cn/(vas/nearby/v2|feed/v5)
+      name: "finka"
+      type: response
+      require-body: true
+      timeout: 60
+      max-size: -1
+
+script-providers:
+  "finka":
+    url: https://raw.githubusercontent.com/Hurpods/stash-rule/main/finka/finka.js
+    interval: 86400

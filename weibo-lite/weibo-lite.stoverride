@@ -3,5 +3,5 @@ desc: 去除开屏广告
 category: ad
 icon: https://raw.githubusercontent.com/Hurpods/stash-rule/main/weibo-lite/weibo-lite.png
 http:
-    url-rewrite:
-        - ^https?://bootpreload\.uve\.weibo\.com/v1/ad/preload - reject
+  url-rewrite:
+    - ^https?://bootpreload\.uve\.weibo\.com/v1/ad/preload - reject
