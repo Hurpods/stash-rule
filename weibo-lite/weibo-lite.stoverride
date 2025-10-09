@@ -1,7 +1,13 @@
 name: weibo轻享版
-desc: 去除开屏广告
+desc: |-
+  - 去除开屏广告
 category: ad
 icon: https://raw.githubusercontent.com/Hurpods/stash-rule/main/weibo-lite/weibo-lite.png
 http:
   url-rewrite:
     - ^https?://bootpreload\.uve\.weibo\.com/v1/ad/preload - reject
+    - ^https?://api\.touch-moblie\.com/api/v4/ad - reject
+    - ^https?://open\.e\.kuaishou\.com.* - reject
+    - ^https?://v2mi\.gdt\.qq\.com.* - reject
+    - ^https?://.*gdtimg\.com.* - reject
+    - ^https?://p66-ad\.adkwai\.com.* - reject
