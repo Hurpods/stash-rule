@@ -25,7 +25,7 @@ http:
     - ^https?://api\.finka\.cn/billing/vip-page - reject
     - ^https?://api\.finka\.cn/billing/vip/getDiscountDescription - reject
     - ^https?://api\.finka\.cn/vas/address/search/rcmd-order - reject
-    - ^https?://api\.finka\.cn/user/setting/match-keyword* - reject
+    - ^https?://api\.finka\.cn/user/setting/match-keyword.* - reject
     - ^https?://mobads.*baidu\.com/.* - reject
     - ^https?://mobads-pre-config\.cdn\.bcebos\.com/.* - reject
   body-rewrite:
