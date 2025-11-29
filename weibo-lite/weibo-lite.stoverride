@@ -8,9 +8,11 @@ rules:
   - DOMAIN-SUFFIX,gdt.qq.com,REJECT
   - DOMAIN-SUFFIX,umeng.com,REJECT
   - DOMAIN-SUFFIX,umengcloud.com,REJECT
+  - DOMAIN-SUFFIX,ugdtimg.com,REJECT
 http:
   url-rewrite:
-    - ^https?://bootpreload\.uve\.weibo\.com/v1/ad/preload - reject
+    - ^https?://bootpreload\.uve\.weibo\.com/(v1|v2)/ad/preload - reject
     - ^https?://api\.touch-moblie\.com/api/v4/ad - reject
     - ^https?://open\.e\.kuaishou\.com.* - reject
     - ^https?://p66-ad\.adkwai\.com.* - reject
+    - ^https?://sdk\.e\.qq\.com/.* - reject

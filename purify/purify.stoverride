@@ -1,25 +1,9 @@
 name: APP净化
-desc: |-
-  - 识货
-    - 开屏广告
-    - 搜索热词
-    - 热点
-    - 分类矩阵
-    - 社区、特价tab
-  - 得物
-    - 首页仅保留推荐tab
-    - 探索页净化
-    - 我的页净化
-  - 滴滴打车
-    - 去除车主、订票、送货tab
-    - 去除首页无用入口、营销卡片
+desc:
 category: ad
 icon: https://raw.githubusercontent.com/Hurpods/stash-rule/main/purify/ad.png
 http:
   mitm:
-    - sh-gateway.shihuo.cn
-    - app.dewu.com
-    - conf.diditaxi.com.cn
   url-rewrite:
     # 识货
     - ^https?://sh-gateway\.shihuo\.cn\/v4\/services\/sh-adapi/.* - reject
@@ -27,65 +11,16 @@ http:
     # 得物
     - ^https?://app\.dewu\.com/sns-conf/v1/eventPendant - reject
     - ^https?://app\.dewu\.com/sns-cnt-tag/v1/tag/challenge - reject
+    # 头条系
+    - ^pglstatp.*toutiao.*\.com - reject
+    - (ad|d|dm|monsetting|adshare|dsp|nativeapp|partner|sm|dm-hl)\.toutiao\.com - reject
+    - (.*)pangolin(-sdk|-dsp)-toutiao(.*)\.com - reject
+    # 百度系
+    - ^https?://tiebac\.baidu\.com/c/e/bu/getbubblelist - reject
   body-rewrite:
-    # 识货
-    - https://sh-gateway.shihuo.cn/v3/sh-api/sh/searchSpeed/hotWordSearch response-jq .data.keywords=[]
-    # 得物
-    - https://app.dewu.com/sns-rec/v1/search/word-skip/list response-jq .data.list=[]
-    - https://app.dewu.com/sns-rec/v1/search/word-skip/list response-jq .data.wantList=[]
-    - https://app.dewu.com/sns-rec/v1/search/hotword-list response-jq .data.list=[]
-    - https://app.dewu.com/sns-rec/v1/search/hotword-list response-jq .data.topicList=[]
-    - https://app.dewu.com/sns-rec/v1/search/hotword-list response-jq .data.videoList=[]
-    - https://app.dewu.com/sns-rec/v1/search/hotword-list response-jq .data.searchWord=""
-    - https://app.dewu.com/sns-rec/v1/search/hotword-list response-jq .data.wordMappings=[]
+    # 和风天气
+    - https://hfapp-service.qweather.net/v2.0/app/ad/list response-jq .data=[]
   script:
-    # 识货
-    - match: ^https?://sh-gateway\.shihuo\.cn/v4/services/sh-appapi/home/info/v1
-      name: "handler"
-      type: response
-      require-body: true
-      timeout: 60
-      max-size: -1
-    - match: ^https?://sh-gateway\.shihuo\.cn/v4/services/sh-appapi/center/config
-      name: "handler"
-      type: response
-      require-body: true
-      timeout: 60
-      max-size: -1
-
-    # 得物
-    - match: ^https?://app\.dewu\.com/sns-rec/v1/du-tab
-      name: "handler"
-      type: response
-      require-body: true
-      timeout: 60
-      max-size: -1
-    - match: ^https?://app\.dewu\.com/api/v1/app/biz-aggregate/me/user-index
-      name: "handler"
-      type: response
-      require-body: true
-      timeout: 60
-      max-size: -1
-    - match: ^https?://app\.dewu\.com/identify-discovery/v1/discovery/index
-      name: "handler"
-      type: response
-      require-body: true
-      timeout: 60
-      max-size: -1
-
-    # 滴滴打车
-    - match: ^https?://conf\.diditaxi\.com\.cn/homepage/v1/core
-      name: "handler"
-      type: response
-      require-body: true
-      timeout: 60
-      max-size: -1
-    - match: ^https?://conf\.diditaxi\.com\.cn/homepage/v1/other/(fast|slow)
-      name: "handler"
-      type: response
-      require-body: true
-      timeout: 60
-      max-size: -1
 
 script-providers:
   "handler":
