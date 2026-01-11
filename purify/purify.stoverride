@@ -5,23 +5,15 @@ icon: https://raw.githubusercontent.com/Hurpods/stash-rule/main/purify/ad.png
 http:
   mitm:
   url-rewrite:
-    # 识货
-    - ^https?://sh-gateway\.shihuo\.cn\/v4\/services\/sh-adapi/.* - reject
-    - ^https?://sh-gateway\.shihuo\.cn/v3/sh-api/daga/search/getSoaringList/v1.* - reject
-    # 得物
-    - ^https?://app\.dewu\.com/sns-conf/v1/eventPendant - reject
-    - ^https?://app\.dewu\.com/sns-cnt-tag/v1/tag/challenge - reject
-    # 头条系
-    - ^pglstatp.*toutiao.*\.com - reject
-    - (ad|d|dm|monsetting|adshare|dsp|nativeapp|partner|sm|dm-hl)\.toutiao\.com - reject
-    - (.*)pangolin(-sdk|-dsp)-toutiao(.*)\.com - reject
-    # 百度系
-    - ^https?://tiebac\.baidu\.com/c/e/bu/getbubblelist - reject
-  body-rewrite:
+    - ^https?://us\.l\.qq\.com/exapp - reject-200
+    - ^https?://sf3-fe-tos\.pglstatp-toutiao\.com/.* - reject-200
     # 和风天气
-    - https://hfapp-service.qweather.net/v2.0/app/ad/list response-jq .data=[]
+    - ^https?://hfapp-service\.qweather\.net/v2.0/app/ad/list - reject-dict
+    # 掌上英雄联盟
+    - ^https?://mlol\.qt\.qq\.com/go/recommend/platstrongshell - reject-dict
+    - ^https?://mlol\.qt\.qq\.com/go/zone/bottomtab_tip - reject-dict
+  body-rewrite:
   script:
-
 script-providers:
   "handler":
     url: https://raw.githubusercontent.com/Hurpods/stash-rule/main/purify/purify.js
