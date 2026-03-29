@@ -12,7 +12,9 @@ rules:
 http:
   url-rewrite:
     - ^https?://bootpreload\.uve\.weibo\.com/(v1|v2)/ad/preload - reject
+    - ^https?://bootrealtime\.uve\.weibo\.com/v2/ad/realtime - reject
     - ^https?://api\.touch-moblie\.com/api/v4/ad - reject
     - ^https?://open\.e\.kuaishou\.com.* - reject
     - ^https?://p66-ad\.adkwai\.com.* - reject
     - ^https?://sdk\.e\.qq\.com/.* - reject
+    - ^https?://cpro.xdmssp.com/.* - reject

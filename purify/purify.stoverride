@@ -2,11 +2,13 @@ name: APP净化
 desc:
 category: ad
 icon: https://raw.githubusercontent.com/Hurpods/stash-rule/main/purify/ad.png
+rules:
+  - DOMAIN-SUFFIX,pglstatp-toutiao.com,REJECT
+  - DOMAIN-SUFFIX,pangolin-sdk-toutiao.com,REJECT
 http:
   mitm:
   url-rewrite:
     - ^https?://us\.l\.qq\.com/exapp - reject-200
-    - ^https?://sf3-fe-tos\.pglstatp-toutiao\.com/.* - reject-200
     # 和风天气
     - ^https?://hfapp-service\.qweather\.net/v2.0/app/ad/list - reject-dict
     # 掌上英雄联盟
