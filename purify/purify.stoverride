@@ -14,9 +14,3 @@ http:
     # 掌上英雄联盟
     - ^https?://mlol\.qt\.qq\.com/go/recommend/platstrongshell - reject-dict
     - ^https?://mlol\.qt\.qq\.com/go/zone/bottomtab_tip - reject-dict
-  body-rewrite:
-  script:
-script-providers:
-  "handler":
-    url: https://raw.githubusercontent.com/Hurpods/stash-rule/main/purify/purify.js
-    interval: 10
