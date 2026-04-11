@@ -30,6 +30,7 @@ http:
     - ^https?://mobads-pre-config\.cdn\.bcebos\.com/.* - reject
     - ^https?://api\.finka\.cn/recommend/live/match - reject
     - ^https?://api\.finka\.cn/live/view/v3 - reject
+    - ^https?://api\.finka\.cn/vas/tool-box/get - reject
   body-rewrite:
     - https://api.finka.cn/constants/ios response-jq .data.splashAdNew={}
     - https://api.finka.cn/constants/ios response-jq .data.adFeedConfig=[]
@@ -46,7 +47,6 @@ http:
     - https://api.finka.cn/profile/info/v2 response-jq .data.vasEntranceInfo={}
     - https://api.finka.cn/profile/info/v2 response-jq .data.valueEquityTopList=[]
     - https://api.finka.cn/inbox/match/newest response-jq .data.superBoostEntrance={}
-    - https://api.finka.cn/vas/tool-box/get response-jq .data.redDot=false
   script:
     - match: ^https?://api\.finka\.cn/(vas/nearby/v2|feed/v5)
       name: "finka"
