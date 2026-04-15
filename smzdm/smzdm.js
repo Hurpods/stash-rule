@@ -100,7 +100,6 @@ function androidSignin(username) {
         resolve([true, "Android端签到成功"]);
       }
       else if (obj["error_code"] === "0" && obj["error_msg"] === "已签到") {
-        $.notification.post(scriptName, "", "重复签到");
         resolve([true, "Android端重复签到"]);
       } else {
         $.notification.post(scriptName, "", `签到出现异常，接口返回数据不合法：${obj}`);

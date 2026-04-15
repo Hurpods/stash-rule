@@ -23,7 +23,7 @@ http:
 cron:
   script:
     - name: "什么值得买"
-      cron: "02 00 * * *"
+      cron: "02 0,8,16 * * *"
       timeout: 300
 script-providers:
   "什么值得买":
