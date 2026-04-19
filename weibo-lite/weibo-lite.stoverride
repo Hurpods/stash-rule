@@ -18,3 +18,5 @@ http:
     - ^https?://p66-ad\.adkwai\.com.* - reject
     - ^https?://sdk\.e\.qq\.com/.* - reject
     - ^https?://cpro.xdmssp.com/.* - reject
+    - ^https?://kadmimage\.biz\.weibo\.com/ad/.* - reject
+    - ^https?://adstrategy\.biz\.weibo\.com/v3/strategy/ad.* - reject
