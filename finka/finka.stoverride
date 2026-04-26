@@ -30,7 +30,7 @@ http:
     - ^https?://mobads-pre-config\.cdn\.bcebos\.com/.* - reject
     - ^https?://api\.finka\.cn/recommend/live/match - reject
     - ^https?://api\.finka\.cn/live/view/v3 - reject
-    - ^https?://api\.finka\.cn/vas/tool-box/get - reject
+    - ^https?://api\.finka\.cn/vas/tool-box/get - reject-dict
   body-rewrite:
     - https://api.finka.cn/constants/ios response-jq .data.splashAdNew={}
     - https://api.finka.cn/constants/ios response-jq .data.adFeedConfig=[]
